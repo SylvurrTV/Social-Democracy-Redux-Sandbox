@@ -1,6 +1,8 @@
 title: Mod Info
 go-to: flavors
 
+Note: the base game's github is currently mid-update. I have updated the mod to match the github meaning some things might be slightly broken until the main game has finished updating.
+
 @flavors
 new-page: true
 
@@ -8,10 +10,13 @@ new-page: true
 
 This mod adds a variety of changes to the base game, mostly in the form of flavor and minor improvements.
 
+- @left: Left Plan + Council flavor
+- @centrist: Center flavor
 - @moderate: Reformist Plan flavor
 - @economics: Economic changes
-- @left: Left Plan + Council flavor
 - @sapd: SAPD flavor
+- @extension: Content to 1936
+- @start_dates: 1930 start date
 - @civil_war_flavor: Civil War flavor
 - @weakened_presidency_hitler: Weakened Presidency + Hitler takeover flavor
 - @coalition_flavor: Coalition flavor
@@ -45,6 +50,18 @@ You can rally alongside the KPD for the Left Plan on May Day, leading to confron
 
 - @flavors: Back
 
+@centrist
+
+= Centrist flavor
+
+The Centrists now fill their historical niche of being acceptable to both sides of the party and controlling dissent, and you might find the party a lot less stable without them. Furthermore, if the crisis gets too bad, Hilferding may eventually concede to the necessity of an economic plan.
+
+@start_dates
+
+= 1930 start date
+
+You can now start the game in January 1930 for a real challenge. The depression has already hit and your coalition is on the verge of collapse.
+
 @sapd
 
 = SAPD flavor
@@ -76,6 +93,12 @@ A very rare scenario in terms of actually occuring in a game, I have added uniqu
 I have made it so that a right-wing coalition from Zentrum to the DNVP can form in 1928 if the SPD refuses to form a government. This will ban Blutmai regardless of what the SPD does, giving an alternate event, and collapse following the Young Plan referendum due to the DNVP's opposition to the Young Plan. Tied into this, the SPD can agitate for referendums while in opposition or toleration using the new Direct Democracy card. I plan to add more similar flavor to coalitions in future though this is the main one, likely for a while.
 
 - @flavors: Back
+
+@extension
+
+= Content to 1936
+
+Content to 1936 has been added in the form of events, including the Abysinnia Crisis and the Spanish Civil War
 
 @minor_changes
 
@@ -130,6 +153,26 @@ The mod also contains many small changes that I felt would be good additions to 
 **16/1/2025**: Support changes changed and Nazi peak implemented
 
 **18/1/2025**: Work in progress timeline extension to around 1937
+
+**20/1/2025**: Some changes to over the time support, including a soft cap on SPD support post return to normalcy
+
+**21/1/2025**: Eviler DVP (sorry guys)
+
+**24/1/2025**: Reichsexekuting Thuringia if SPD president added
+
+*27/1/2025**: Seldte martial law added and generally just more of the March on Berlin seldte variation content
+
+**30/1/2025**: Economic factors feed into each other, effect support. Also modified post-34 bourgeois economic plan to include tariff hikes if budget deficit
+
+**11/2/2025**: Post civil war elections added & new mechanic to radicalize the new middle class, increasing support and making them less offended by leftist actions
+
+**13/2/2025**: Minor faction rework, changing dissent to emphasize the historical Centrist niche of keeping the party together
+
+**14/2/2025**: Hilferding eventually concedes to the necessity of an economic plan...
+
+**16/2/2025**: Political crisis event if multiple elections without majority.
+
+**17/2/2025**: 1930 start date for those who want a challenge!
 
 - @flavors: Back
 
