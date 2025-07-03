@@ -125,15 +125,15 @@ Q.women_in_rb = 0;
 Q.rb_banned = 0;
 Q.sh_strength = 500;
 // todo: stalhelm grows too fast in base game...
-Q.sh_militancy = 0.5;
+Q.sh_militancy = 0.2;
 Q.sh_banned = 0;
 Q.sh_banned_prussia = 0;
 Q.sa_strength = 280;
-Q.sa_militancy = 0.5;
+Q.sa_militancy = 0.3;
 Q.sa_banned = 0;
 Q.sa_banned_prussia = 0;
 Q.rfb_strength = 130;
-Q.rfb_militancy = 0.5;
+Q.rfb_militancy = 0.3;
 Q.rfb_banned = 1;
 Q.rfb_banned_prussia = 1;
 
@@ -223,9 +223,9 @@ Q.parties = ['spd', 'sapd', 'kpd', 'z', 'ddp', 'dvp', 'dnvp', 'nsdap', 'other'];
 
 // Support for party by social group
 // they don't have to sum to 100 since the electoral calculations will be normalized.
-Q.workers_spd = 52;
+Q.workers_spd = 50;
 Q.workers_sapd = 0;
-Q.workers_kpd = 25;
+Q.workers_kpd = 24;
 Q.workers_z = 6;
 Q.workers_ddp = 0;
 Q.workers_dvp = 0;
@@ -238,20 +238,20 @@ Q.old_middle_sapd = 0;
 Q.old_middle_kpd = 0;
 Q.old_middle_z = 5;
 Q.old_middle_ddp = 6;
-Q.old_middle_dvp = 22;
-Q.old_middle_dnvp = 24;
-Q.old_middle_nsdap = 24;
-Q.old_middle_other = 15;
+Q.old_middle_dvp = 20;
+Q.old_middle_dnvp = 14;
+Q.old_middle_nsdap = 25;
+Q.old_middle_other = 16;
 
-Q.new_middle_spd = 3;
+Q.new_middle_spd = 5;
 Q.new_middle_sapd = 0;
 Q.new_middle_kpd = 1;
 Q.new_middle_z = 10;
 Q.new_middle_ddp = 20;
-Q.new_middle_dvp = 20;
-Q.new_middle_dnvp = 10;
-Q.new_middle_nsdap = 18;
-Q.new_middle_other = 18;
+Q.new_middle_dvp = 19;
+Q.new_middle_dnvp = 6;
+Q.new_middle_nsdap = 19;
+Q.new_middle_other = 19;
 
 Q.rural_spd = 8;
 Q.rural_sapd = 0;
@@ -261,11 +261,11 @@ Q.rural_ddp = 5;
 Q.rural_dvp = 8;
 Q.rural_dnvp = 22;
 Q.rural_nsdap = 29;
-Q.rural_other = 16;
+Q.rural_other = 18;
 
-Q.unemployed_spd = 24;
+Q.unemployed_spd = 20;
 Q.unemployed_sapd = 0;
-Q.unemployed_kpd = 42;
+Q.unemployed_kpd = 45;
 Q.unemployed_z = 1;
 Q.unemployed_ddp = 0;
 Q.unemployed_dvp = 0;
@@ -279,7 +279,7 @@ Q.catholics_kpd = 2;
 Q.catholics_z = 50;
 Q.catholics_ddp = 0;
 Q.catholics_dvp = 5;
-Q.catholics_dnvp = 0;
+Q.catholics_dnvp = 2;
 Q.catholics_nsdap = 0;
 Q.catholics_other = 15;
 
@@ -486,7 +486,9 @@ Q.timers = ['advisor_action', 'confronting_nazis', 'crisis_program',
             'sa_ban', 'sh_ban', 'papen_chancellor',
             'kpd_policy', 'kpd_ultimatum', 'popular_front_dispute',
             'high_inflation', 'banking_crisis', 'march_on_berlin', 'abysinnia', 'nazi_peak',
-            'nazi_reform', 'understanding_enemy', 'laissez_faire', 'presidential'];
+            'nazi_reform', 'understanding_enemy', 'laissez_faire', 'presidential', 'papenomics', 'thuringeration',
+            'advisor_loss', 'schleichers_schemes', 'disarray', 'dne', 'businesses_lose_confidence', 'article_48',
+            'military_relations', 'postal_affairs_timer'];
 Q.advisor_action_timer = 0;
 // party affairs timers
 Q.confronting_nazis_timer = 0;
@@ -596,5 +598,64 @@ Q.schumacher_advisor = 0; // Kurt Schumacher (post-1930)
 Q.hirschfeld_advisor = 0; // Magnus Hirschfeld
 Q.radbruch_advisor = 0; // Gustav Radbruch
 Q.stampfer_advisor = 0; // Friedrich Stampfer
+
+Q.prussia_election_year = 1932;
+Q.prussia_election_month = 4;
+
+Q.bavaria_election_year = 1932;
+Q.bavaria_election_month = 4;
+
+Q.thuringia_election_year = 1933;
+Q.thuringia_election_month = 11;
+
+Q.saxony_election_year = 1933;
+Q.saxony_election_month = 4;
+
+Q.schaumburg_lippe_election_year = 1931;
+Q.schaumburg_lippe_election_month = 5;
+
+Q.hamburg_election_year = 1931;
+Q.hamburg_election_month = 9;
+
+Q.in_hamburg_groko = 1;
+
+Q.wurttemberg_election_year = 1932;
+Q.wurttemberg_election_month = 4;
+
+Q.h_elections = 1;
+
+Q.nazi_thuringia = 1;
+Q.t_elections = 1;
+
+Q.saxon_dispute = 1;
+
+Q.spd_pl = 29;
+Q.dnvp_pl = 18;
+Q.z_pl = 15;
+Q.dvp_pl = 9;
+Q.kpd_pl = 11;
+Q.ddp_pl = 6;
+Q.nsdap_pl = 2;
+Q.other_pl = 11;
+
+Q.spd_bl = 26;
+Q.z_bl = 35;
+Q.nsdap_bl = 9;
+Q.dnvp_bl = 9;
+Q.dvp_bl = 4;
+Q.kpd_bl = 3;
+Q.bb_bl = 11;
+Q.ddp_bl = 0;
+Q.other_bl = 5;
+
+Q.spd_hl = 36;
+Q.z_hl = 1;
+Q.nsdap_hl = 2;
+Q.dnvp_hl = 14;
+Q.dvp_hl = 13;
+Q.kpd_hl = 17;
+Q.ddp_hl = 13;
+Q.other_hl = 3;
+
 !}
 go-to: root.menu

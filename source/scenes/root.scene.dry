@@ -12,18 +12,12 @@ go-to: start_menu_2
 
 @start_menu_2
 
-- @redirect: IF YOU DON'T SEE THE SANDBOX TAB BESIDE LIBRARY AND OPTIONS, CLICK HERE
 - @start: Start game
 - @election_simulation: Election simulation
 - @credits: Credits
+- @mod_info: Mod info
 - @game_over.achievements
 
-
-@redirect
-subtitle: The sandbox menu does not load from the mod menu, click to be redirected to the correct page.
-on-arrival: {!
-window.top.location.replace("https://reduxsandbox.sylvurr.com");
-!}
 
 @start
 on-arrival: {!
@@ -150,15 +144,15 @@ Q.rb_militancy = 0.01;
 Q.women_in_rb = 0;
 Q.rb_banned = 0;
 Q.sh_strength = 300;
-Q.sh_militancy = 0.5;
+Q.sh_militancy = 0.2;
 Q.sh_banned = 0;
 Q.sh_banned_prussia = 0;
 Q.sa_strength = 80;
-Q.sa_militancy = 0.5;
+Q.sa_militancy = 0.3;
 Q.sa_banned = 0;
 Q.sa_banned_prussia = 0;
 Q.rfb_strength = 130;
-Q.rfb_militancy = 0.5;
+Q.rfb_militancy = 0.3;
 Q.rfb_banned = 0;
 Q.rfb_banned_prussia = 0;
 
@@ -233,6 +227,10 @@ Q.inflation = 2.9;
 // economic growth - same source as above, Table 2 (preisbereinigt) - this is also the source for the yearly changes in the great depression.
 Q.economic_growth = 4.4;
 
+// economic expansion timer
+Q.economic_expansion = 0;
+
+
 
 Q.strife = 0;
 
@@ -245,6 +243,7 @@ Q.new_middle_qol = 100;
 
 Q.classes = ['workers', 'old_middle', 'new_middle', 'rural', 'unemployed', 'catholics'];
 Q.parties = ['spd', 'sapd', 'kpd', 'z', 'ddp', 'dvp', 'dnvp', 'nsdap', 'other'];
+Q.states = ['prussia', 'bavaria', 'thuringia', 'saxony', 'schaumburg_lippe', 'hamburg', 'wurttemberg'];
 
 // Support for party by social group
 // they don't have to sum to 100 since the electoral calculations will be normalized.
@@ -509,8 +508,11 @@ Q.timers = ['advisor_action', 'confronting_nazis', 'crisis_program',
             'sa_ban', 'sh_ban', 'papen_chancellor',
             'kpd_policy', 'kpd_ultimatum', 'popular_front_dispute',
             'high_inflation', 'banking_crisis', 'march_on_berlin', 'abysinnia', 'nazi_peak',
-            'nazi_reform', 'understanding_enemy', 'laissez_faire', 'presidential'];
+            'nazi_reform', 'understanding_enemy', 'laissez_faire', 'presidential', 'papenomics', 'thuringeration',
+            'advisor_loss', 'schleichers_schemes', 'disarray', 'dne', 'businesses_lose_confidence', 'article_48',
+            'military_relations', 'postal_affairs'];
 Q.advisor_action_timer = 0;
+Q.advisor_loss_timer = 0;
 // party affairs timers
 Q.confronting_nazis_timer = 0;
 Q.crisis_program_timer = 0;
@@ -565,6 +567,7 @@ Q.abortion_referendum_timer = 0;
 Q.buyer_referendum_timer = 0;
 Q.council_development_timer = 0;
 Q.spanish_war_timer = 0;
+Q.postal_affairs_timer = 0;
 // event timers
 Q.emergency_cuts_timer = 0;
 Q.unemployment_insurance_timer = 0;
@@ -577,6 +580,18 @@ Q.nazi_peak_timer = 0;
 Q.nazi_reform_timer = 0;
 Q.laissez_faire_timer = 0;
 Q.presidential_timer = 0;
+Q.papenomics_timer = 0;
+Q.thuringeration_timer = 0;
+Q.disarray_timer = 0;
+Q.dne_timer = 0;
+Q.businesses_lose_confidence_timer = 0;
+// presidential affairs
+Q.article_48_timer = 0;
+Q.military_relations_timer = 0;
+
+Q.fun_value = Math.floor(Math.random() * 100) + 1;
+
+Q.political_crisis_progress = 0;
 
 // all the initial advisors are centrists.
 Q.wels_advisor = 1; // Otto Wels
@@ -619,6 +634,163 @@ Q.schumacher_advisor = 0; // Kurt Schumacher (post-1930)
 Q.hirschfeld_advisor = 0; // Magnus Hirschfeld
 Q.radbruch_advisor = 0; // Gustav Radbruch
 Q.stampfer_advisor = 0; // Friedrich Stampfer
+
+Q.prussia_spd = 0.95;
+Q.prussia_sapd = 1;
+Q.prussia_kpd = 1.05;
+Q.prussia_ddp = 1;
+Q.prussia_dvp = 0.95;
+Q.prussia_dnvp = 1.15;
+Q.prussia_z = 1.05;
+Q.prussia_other = 0.6;
+Q.prussia_nsdap = 0.65;
+
+Q.bavaria_spd = 0.75;
+Q.bavaria_sapd = 0.5;
+Q.bavaria_kpd = 0.3;
+Q.bavaria_ddp = 0.5;
+Q.bavaria_dvp = 0.3;
+Q.bavaria_dnvp = 0.35;
+Q.bavaria_z = 1.2;
+Q.bavaria_other = 1.1;
+Q.bavaria_nsdap = 1.85;
+
+Q.thuringia_spd = 1.15;
+Q.thuringia_sapd = 1;
+Q.thuringia_kpd = 0.7;
+Q.thuringia_ddp = 1;
+Q.thuringia_dvp = 1.4;
+Q.thuringia_dnvp = 0.5;
+Q.thuringia_z = 0.2;
+Q.thuringia_other = 2.65;
+Q.thuringia_nsdap = 0.85;
+
+Q.saxony_spd = 0.8;
+Q.saxony_sapd = 0.7;
+Q.saxony_kpd = 0.65;
+Q.saxony_ddp = 0.85;
+Q.saxony_dvp = 1.25;
+Q.saxony_dnvp = 0.45;
+Q.saxony_z = 0.2;
+Q.saxony_other = 1.55;
+Q.saxony_nsdap = 0.8;
+
+Q.schaumburg_lippe_spd = 1.3;
+Q.schaumburg_lippe_sapd = 0.5;
+Q.schaumburg_lippe_kpd = 0.25;
+Q.schaumburg_lippe_ddp = 1.45;
+Q.schaumburg_lippe_dvp = 0.8;
+Q.schaumburg_lippe_dnvp = 1.1;
+Q.schaumburg_lippe_z = 0;
+Q.schaumburg_lippe_other = 1.25;
+Q.schaumburg_lippe_nsdap = 0;
+
+Q.hamburg_spd = 1.05;
+Q.hamburg_sapd = 1.05;
+Q.hamburg_kpd = 1.2;
+Q.hamburg_ddp = 1.7;
+Q.hamburg_dvp = 1.05;
+Q.hamburg_dnvp = 0.9;
+Q.hamburg_z = 0.2;
+Q.hamburg_other = 0.25;
+Q.hamburg_nsdap = 0.6;
+
+Q.wurttemberg_spd = 0.9;
+Q.wurttemberg_sapd = 0.85;
+Q.wurttemberg_kpd = 0.8;
+Q.wurttemberg_ddp = 2.3;
+Q.wurttemberg_dvp = 0.55;
+Q.wurttemberg_dnvp = 0.45;
+Q.wurttemberg_z = 1;
+Q.wurttemberg_other = 2.3;
+Q.wurttemberg_nsdap = 0.1;
+
+Q.prussia_election_year = 1928;
+Q.prussia_election_month = 5;
+
+Q.bavaria_election_year = 1928;
+Q.bavaria_election_month = 5;
+
+Q.thuringia_election_year = 1929;
+Q.thuringia_election_month = 12;
+
+Q.saxony_election_year = 1929;
+Q.saxony_election_month = 5;
+
+Q.schaumburg_lippe_election_year = 1928;
+Q.schaumburg_lippe_election_month = 4;
+
+Q.hamburg_election_year = 1928;
+Q.hamburg_election_month = 2;
+
+Q.wurttemberg_election_year = 1928;
+Q.wurttemberg_election_month = 5;
+
+Q.spd_pl = 25;
+Q.dnvp_pl = 24;
+Q.z_pl = 18;
+Q.dvp_pl = 10;
+Q.kpd_pl = 10;
+Q.ddp_pl = 6;
+Q.nsdap_pl = 2;
+Q.other_pl = 6;
+
+Q.spd_bl = 17;
+Q.z_bl = 33;
+Q.nsdap_bl = 17;
+Q.dnvp_bl = 9;
+Q.dvp_bl = 0;
+Q.kpd_bl = 8;
+Q.bb_bl = 7;
+Q.ddp_bl = 3;
+Q.other_bl = 5;
+
+Q.spd_tl = 33;
+Q.z_tl = 0;
+Q.nsdap_tl = 3;
+Q.dnvp_tl = 23;
+Q.dvp_tl = 11;
+Q.kpd_tl = 14;
+Q.ddp_tl = 3;
+Q.other_tl = 12;
+
+Q.spd_sl = 32;
+Q.z_sl = 0;
+Q.nsdap_sl = 2;
+Q.dnvp_sl = 14;
+Q.dvp_sl = 12;
+Q.kpd_sl = 15;
+Q.ddp_sl = 5;
+Q.other_sl = 5;
+Q.aspd_sl = 4;
+
+Q.spd_schl = 45;
+Q.z_schl = 0;
+Q.nsdap_schl = 0;
+Q.dnvp_schl = 25;
+Q.dvp_schl = 9;
+Q.kpd_schl = 2;
+Q.ddp_schl = 7;
+Q.other_schl = 11;
+
+Q.spd_hl = 38;
+Q.z_hl = 2;
+Q.nsdap_hl = 2;
+Q.dnvp_hl = 15;
+Q.dvp_hl = 11;
+Q.kpd_hl = 17;
+Q.ddp_hl = 10;
+Q.other_hl = 5;
+
+Q.spd_wl = 16;
+Q.z_wl = 21;
+Q.nsdap_wl = 0;
+Q.dnvp_wl = 10;
+Q.dvp_wl = 5;
+Q.kpd_wl = 12;
+Q.ddp_wl = 11;
+Q.other_wl = 24;
+
 !}
 set-bg: img/map_2.jpg
 new-page: true
@@ -667,9 +839,7 @@ Q.center_dissent = 25;
 Q.z_relation = 41;
 Q.kpd_relation = 16;
 Q.dvp_relation = 31;
-Q.budget = 0;
-Q.status_quo = 1;
-Q.budget_resolved = 1;
+Q.budget = 2;
 this.state.disableSaves = true;
 !}
 go-to: 1928_main
@@ -701,9 +871,42 @@ Q.z_relation -= 9;
 Q.kpd_relation -= 5;
 Q.dvp_relation -= 9;
 Q.budget -= 2;
+Q.status_quo = 1;
+Q.budget_resolved = 1;
 this.state.disableSaves = true;
 !}
 go-to: 1930_main
+
+@1925_easy
+view-if: year == 1925
+on-arrival: difficulty = -1; resources = 4; dues = 3; rb_strength = 2500; kpd_relation += 9; z_relation += 5; dvp_relation += 9; budget += 1
+go-to: 1925_main
+
+@1925_hard
+view-if: year == 1925
+on-arrival: difficulty = 1; resources = 0; dues = 1; rb_strength = 1000; reformist_dissent += 10; left_dissent += 10; labor_dissent += 10; center_dissent += 15; z_relation -=  9; kpd_relation -= 5; dvp_relation -= 9; budget -= 1;
+go-to: 1925_main
+
+@1925_historical
+view-if: year == 1925
+subtitle: Saving, loading, and polls will be disabled. [? if not achievement_game_completed: Not recommended for a first playthrough. ?]
+on-arrival: {!
+Q.difficulty = 2;
+Q.historical_mode = 1;
+Q.resources = 2;
+Q.dues = 1;
+Q.rb_strength = 2000;
+Q.reformist_dissent += 5;
+Q.left_dissent += 5;
+Q.labor_dissent += 5;
+Q.center_dissent += 10;
+Q.z_relation -= 9;
+Q.kpd_relation -= 5;
+Q.dvp_relation -= 9;
+Q.budget -= 2;
+this.state.disableSaves = true;
+!}
+go-to: 1925_main
 
 @settings
 subtitle: Enable or disable various features.
@@ -716,8 +919,13 @@ For other, non-difficulty related tweaks.
 - @disable_normalize: Disable experimental support changes.
 - @enable_hyperinflation: Enable hyperinflation (janky)
 - @disable_hyperinflation: Disable hyperinflation
-- @1930: Begin the game in 1930. (WIP)
+- @enable_landtags: Enable WIP landtags (WIP).
+- @disable_landtags: Disable WIP landtags (WIP).
+- @enable_legislature: Enable legislative rework
+- @disable_legislature: Disable legislative rework
+- @1930: Begin the game in 1930.
 - @1928: Begin the game in 1928.
+- @1925: Begin the game in 1925 (fairly WIP)
 - @menu: Back.
 
 @disable_end
@@ -764,6 +972,40 @@ go-to: menu
 
 Hyperinflation disabled.
 
+@enable_landtags
+view-if: landtags_enabled != 1
+on-arrival: landtags_enabled = 1
+go-to: menu
+
+Landtags have been enabled.
+
+@disable_landtags
+view-if: landtags_enabled
+on-arrival: landtags_enabled = 0
+go-to: menu
+
+Landtags have been disabled.
+
+@enable_legislature
+view-if: legislature_enabled != 1
+on-arrival: legislature_enabled = 1
+go-to: menu
+
+The legislative rework have been enabled.
+
+@disable_legislature
+view-if: legislature_enabled
+on-arrival: legislature_enabled = 0
+go-to: menu
+
+The legislative rework has been disabled.
+
+@1925
+view-if: year != 1925
+go-to: 1925_root
+
+The starting date has been changed to 1925. This is so WIP you wouldn't believe it. Literally unplayable. Don't blame me when it's exactly as I warned.
+
 @1930
 view-if: year != 1930
 go-to: 1930_root
@@ -776,6 +1018,10 @@ go-to: start_menu_2
 
 @menu
 
+- @1925_easy: Begin (easy difficulty)
+- @1925_main: Begin (normal difficulty)
+- @1925_hard: Begin (hard difficulty)
+- @1925_historical: Begin (historical mode)
 - @1928_easy: Begin (easy difficulty)
 - @1928_main: Begin (normal difficulty)
 - @1928_hard: Begin (hard difficulty)
@@ -809,3 +1055,15 @@ go-to: main if difficulty >= 0; main.main_easy if difficulty < 0
 It is a grim time for German democracy. Following the largest crash in the stock market the world has seen, a worldwide depression has started, hitting Germany especially hard. The Nazis are ascendant and our support is dwindling as our coalition nears collapse. 
 
 It will be our responsibility to ensure that this crisis of capitalism will not end so badly for the working class.
+
+@1925_main
+view-if: year == 1925
+audio: shuffle music/1928_1930/FruhlingsliedMendelssohn.mp3 music/1928_1930/AUF_HOHEN_BERGEN_noise_reduced.mp3 music/1928_1930/MarekWeber.mp3 music/1928_1930/BAUERNKAPELLE.mp3 music/1928_1933/DERLINDENBAUM_normalized.mp3 music/1928_1933/ZurSonne_zurFreiheit.mp3 music/1928_1933/arbeiter_marseille.mp3 music/1928_1933/Wann_wir_schreiten_Seit_an_Seit.mp3 music/1930_1933/Internationale-de_normalized.ogg
+new-page: true
+go-to: main if difficulty >= 0; main.main_easy if difficulty < 0
+
+= 1925
+
+It is an uncertain time for German democracy. Though the crises of 1923 have subsided and given way to a stabilization and normalization, the bourgeois parties continue to shift to the right to exclude us from government, even including the anticonstitutional DNVP in the form of the Luther cabinet which has just assumed power. 
+
+The task of Social Democracy is to prepare itself so that when the government inevitably falls due to disagreements between the left and right of the bourgeois parties, we will be seen by the workers of Germany a viable alternative.

@@ -296,7 +296,12 @@ if (Q.braun_campaign) {
     }
     Q.hindenburg_votes += ((100-Q.pro_republic)/1000);
     if (Q.z_support_braun && Q.z_support_braun == 1) {
-        Q.braun_votes += Q.z_normalized;
+        var z_percent = (0.6+(Q.z_relation/100))/2;
+        if (Q.hitler_plurality) {
+            z_percent += 0.1;
+        }
+        z_percent = Math.max(0, Math.min(1, z_percent));
+        Q.braun_votes += (Q.z_normalized*z_percent);
     } else {
         Q.hindenburg_votes += Q.z_normalized;
     }
@@ -306,7 +311,9 @@ if (Q.braun_campaign) {
         Q.thalmann_votes += Q.kpd_normalized;
     }
     if (Q.dvp_support_braun) {
-        Q.braun_votes += Q.dvp_normalized;
+        var dvp_percent = (0.4+(Q.dvp_relation/100))/2;
+        dvp_percent = Math.max(0, Math.min(1, dvp_percent));
+        Q.braun_votes += (Q.dvp_normalized*dvp_percent);
     } else {
         Q.hindenburg_votes += Q.dvp_normalized;
     }
@@ -341,6 +348,9 @@ if (!Q.kpd_support_braun) {
     Q.thalmann_votes += ((100-Q.pro_republic)/1500);
     Q.thalmann_votes += (Q.pacifism/250);
     Q.thalmann_votes += ((Math.floor(Math.random() * 11))/350);
+    if (Q.election_round > 1 && !Q.thalmann_plurality && !Q.spd_support_thalmann) {
+        Q.thalmann_votes = Q.thalmann_votes*0.9;
+    }
 }
 if (!Q.hitler_support_hindenburg && !Q.hitler_support_seldte) {
     Q.hitler_votes += ((100-Q.pro_republic)/1000);
@@ -611,11 +621,11 @@ go-to: hindenburg_wins if hindenburg_plurality == 1; thalmann_wins if thalmann_p
 @hindenburg_wins
 on-arrival: president = "Hindenburg"; {!
 if (Q.braun_campaign && Q.hitler_support_hindenburg) {
-    Q.workers_spd += 5*(1-dissent);
-    Q.new_middle_spd += 3*(1-dissent);
-    Q.old_middle_spd += 2*(1-dissent);
-    Q.rural_spd += 2*(1-dissent);
-    Q.unemployed_spd += 3*(1-dissent);
+    Q.workers_spd += 5*(1-Q.dissent);
+    Q.new_middle_spd += 3*(1-Q.dissent);
+    Q.old_middle_spd += 2*(1-Q.dissent);
+    Q.rural_spd += 2*(1-Q.dissent);
+    Q.unemployed_spd += 3*(1-Q.dissent);
     Q.center_dissent -= 5;
     Q.labor_dissent -= 5;
     Q.reformist_dissent -= 5;
@@ -666,7 +676,7 @@ Otto Braun of the SPD has won the presidency! This is a moment of celebration fo
 
 @far_right_coup
 view-if: coup_progress >= 10
-on-arrival: reichswehr_loyalty -= 0.1 if reichswehr_loyalty <= 0.05; reichswehr_loyalty += 0.1; reichswehr_loyalty += 0.15 if z_support_braun; reichswehr_loyalty -= 0.05 if kpd_support_braun; rb_strength += 100
+on-arrival: nazi_rebel = 1; reichswehr_loyalty -= 0.1 if reichswehr_loyalty <= 0.05; reichswehr_loyalty += 0.1; reichswehr_loyalty += 0.15 if z_support_braun; reichswehr_loyalty -= 0.05 if kpd_support_braun; rb_strength += 100
 
 Immediately following the election, forces of the Stalhelm and SA organized across the country under the Harzburg Front storm government offices, communications, railway, and other important infrastructure, as reactionary officers begin taking their forces out of barracks and joining in the coup.
 
