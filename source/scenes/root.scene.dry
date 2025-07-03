@@ -12,12 +12,20 @@ go-to: start_menu_2
 
 @start_menu_2
 
+- @redirect: IF YOU DON'T SEE THE SANDBOX TAB BESIDE LIBRARY AND OPTIONS, CLICK HERE
 - @start: Start game
 - @election_simulation: Election simulation
 - @credits: Credits
 - @mod_info: Mod info
 - @game_over.achievements
 
+
+@redirect
+subtitle: The sandbox menu does not load from the mod menu, click to be redirected to the correct page.
+on-arrival: {!
+window.top.location.replace("https://reduxsandbox.sylvurr.com");
+window.enableDarkMode();
+!}
 
 @start
 on-arrival: {!
